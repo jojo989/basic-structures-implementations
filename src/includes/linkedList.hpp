@@ -80,6 +80,43 @@ public:
         --m_capacity;
     }
 
+    void insert_at(size_t index, const T& value) {
+
+        if (!m_head) {
+            push_back(value);
+            return;
+        }
+
+        if (index >= m_capacity) {
+            push_back(value);
+            return;
+        }
+
+        if (index == 0) {
+            push_front(value);
+            return;
+        }
+
+        size_t i{};
+
+        Node<T>* currentNode{ m_head };
+
+        // for loops at home ass 
+        while (currentNode->next && i < index - 1) {
+            currentNode = currentNode->next;
+            ++i;
+        }
+        Node<T>* newNode{ new Node<T> };
+        newNode->data = value;
+        newNode->next = currentNode->next;
+        currentNode->next = newNode;
+
+        if (newNode->next == nullptr) {
+            m_tail = newNode;
+        }
+
+        ++m_capacity;
+    }
 
     inline size_t capacity() const {
         return m_capacity;
